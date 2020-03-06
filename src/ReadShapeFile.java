@@ -44,6 +44,16 @@ public class ReadShapeFile {
 					System.out.println(tempOval);
 					break;
 
+				case "square":
+					Square tempSquare = readSquare(currentLine);
+					System.out.println(tempSquare);
+					break;
+
+				case "rect":
+					Rect tempRect =  readRect(currentLine);
+					System.out.println(tempRect);
+					break;
+
 				default:
 					break;
 			}
@@ -106,7 +116,48 @@ public class ReadShapeFile {
 		return newOval;
 	}
 
+	private static Square readSquare(String[] squareData) {
+		//Assigns the relevant portions of the circleData array to correctly typed variables.
+		int xPosition = Integer.parseInt(squareData[1]);
+		int yPosition = Integer.parseInt(squareData[2]);
+		int xVelocity = Integer.parseInt(squareData[3]);
+		int yVelocity = Integer.parseInt(squareData[4]);
+		boolean isFilled = Boolean.parseBoolean(squareData[5]);
+		int sideLength = Integer.parseInt(squareData[6]);
+		int insertionTime = Integer.parseInt(squareData[10]);
 
+		//Creates an RGB colour from the r, g, and b values given
+		Color colour = Color.rgb(Integer.parseInt(squareData[7]),
+				Integer.parseInt(squareData[8]),
+				Integer.parseInt(squareData[9]));
+
+		Square newSquare = new Square(insertionTime, xPosition, yPosition,
+				xVelocity, yVelocity, sideLength, colour, isFilled);
+
+		return newSquare;
+	}
+
+	private static Rect readRect(String[] rectData) {
+		//Assigns the relevant portions of the ovalData array to correctly typed variables.
+		int xPosition = Integer.parseInt(rectData[1]);
+		int yPosition = Integer.parseInt(rectData[2]);
+		int xVelocity = Integer.parseInt(rectData[3]);
+		int yVelocity = Integer.parseInt(rectData[4]);
+		boolean isFilled = Boolean.parseBoolean(rectData[5]);
+		int width = Integer.parseInt(rectData[6]);
+		int height = Integer.parseInt(rectData[7]);
+		int insertionTime = Integer.parseInt(rectData[11]);
+
+		//Creates an RGB colour from the r, g, and b values given
+		Color colour = Color.rgb(Integer.parseInt(rectData[8]),
+				Integer.parseInt(rectData[9]),
+				Integer.parseInt(rectData[10]));
+
+		Rect newRect = new Rect(insertionTime, xPosition, yPosition,
+				xVelocity, yVelocity, width, height, colour, isFilled);
+
+		return newRect;
+	}
 
 	/**
 	 * Method to read the file and return a queue of shapes from this file. The
