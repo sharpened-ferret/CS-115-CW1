@@ -50,7 +50,7 @@ public class Circle extends ClosedShape {
     }
     
     /**
-     * @param Resets the diameter.
+     * @param diameter Resets the diameter.
      */
     public void setDiameter (int diameter) {
     	this.diameter = diameter;
