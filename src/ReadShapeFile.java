@@ -116,8 +116,12 @@ public class ReadShapeFile {
 		return newOval;
 	}
 
+	/**
+	 * @param squareData a String array containing properties read from file, split at space characters
+	 * @return a new square object with the specified properties
+	 */
 	private static Square readSquare(String[] squareData) {
-		//Assigns the relevant portions of the circleData array to correctly typed variables.
+		//Assigns the relevant portions of the squareData array to correctly typed variables.
 		int xPosition = Integer.parseInt(squareData[1]);
 		int yPosition = Integer.parseInt(squareData[2]);
 		int xVelocity = Integer.parseInt(squareData[3]);
@@ -137,8 +141,12 @@ public class ReadShapeFile {
 		return newSquare;
 	}
 
+	/**
+	 * @param rectData a string array containing properties read from file, split at space characters
+	 * @return a new rectangle object with the specified properties
+	 */
 	private static Rect readRect(String[] rectData) {
-		//Assigns the relevant portions of the ovalData array to correctly typed variables.
+		//Assigns the relevant portions of the rectData array to correctly typed variables.
 		int xPosition = Integer.parseInt(rectData[1]);
 		int yPosition = Integer.parseInt(rectData[2]);
 		int xVelocity = Integer.parseInt(rectData[3]);
