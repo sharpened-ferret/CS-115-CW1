@@ -46,6 +46,10 @@ public abstract class ClosedShape {
 	 */
 	protected Color colour;
 
+	protected Color initialColor;
+	protected Color secondaryColor;
+	protected boolean isFlashing;
+
 	/**
 	 * Determines if the Shape has a fill colour or not.
 	 */
@@ -71,6 +75,26 @@ public abstract class ClosedShape {
 		this.colour = colour;
 		this.isFilled = isFilled;
 		this.insertionTime = insertionTime;
+	}
+
+	/**
+	 * Creates a closed shape object.
+	 * @param x The x position.
+	 * @param y the y position.
+	 * @param colour The line or fill colour.
+	 * @param isFilled True if the shape is filled, false if not.
+	 */
+	protected ClosedShape (int insertionTime, int x, int y, int vx, int vy, Color colour, Color secondaryColor, boolean isFilled, boolean isFlashing) {
+		this.x = x;
+		this.y = y;
+		this.xVec = vx;
+		this.yVec = vy;
+		this.colour = colour;
+		this.isFilled = isFilled;
+		this.insertionTime = insertionTime;
+		this.isFlashing = isFlashing;
+		this.initialColor = colour;
+		this.secondaryColor = secondaryColor;
 	}
 	
 	/**
@@ -238,6 +262,17 @@ public abstract class ClosedShape {
 	 	y += yVec;
 	 }
 
+	 public void updateColour() {
+	 	if (isFlashing) {
+	 		if (colour.equals(initialColor)) {
+	 			colour = secondaryColor;
+			}
+	 		else {
+	 			colour = initialColor;
+			}
+		}
+	 }
+
 	 /**
 	  * Draws the object to the current component.  Abstract method.
 	  * @param g The graphics object associated with the drawing component.
@@ -254,5 +289,6 @@ public abstract class ClosedShape {
 	  * Get the height of the current component
           * @return the height of the shape
 	  */
-          public abstract int getHeight (); 
+          public abstract int getHeight ();
+
 }

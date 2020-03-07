@@ -21,12 +21,6 @@ public class Oval extends ClosedShape {
 	//The width and height of the oval (major and minor axis)
 	private int width, height;
 
-	//Variables for controlling flashing shapes
-	private boolean isFlashing = false;
-	private Color primaryColour = null;
-	private Color secondaryColour = null;
-	private double currentTime;
-	private double lastTime;
 
 	/**
 	 * Creates an oval.
@@ -61,13 +55,9 @@ public class Oval extends ClosedShape {
 	 * @param isFlashing True if the object flashes between primary and secondary colours
 	 */
 	public Oval (int insertionTime, int x, int y, int vx, int vy, int width, int height, Color colour, Color secondaryColour, boolean isFilled, boolean isFlashing) {
-		super (insertionTime, x, y, vx, vy, colour, isFilled);
+		super (insertionTime, x, y, vx, vy, colour, secondaryColour, isFilled, isFlashing);
 		this.width = width;
 		this.height = height;
-		this.isFlashing = isFlashing;
-		this.primaryColour = colour;
-		this.secondaryColour = secondaryColour;
-		this.lastTime = System.nanoTime() / 1000000000;
 	}
 
 	/**
@@ -113,17 +103,6 @@ public class Oval extends ClosedShape {
  	 * @param g The graphics object of the drawable component.
  	 */
 	public void draw (GraphicsContext g) {
-		if (isFlashing) {
-			currentTime = System.nanoTime() / 1000000000;
-			if ((currentTime - lastTime) >= 2) {
-				if (colour.equals(primaryColour)) {
-					colour = secondaryColour;
-				} else {
-					colour = primaryColour;
-				}
-				lastTime = currentTime;
-			}
-		}
 		g.setFill (colour);
 		g.setStroke( colour );
 		if (isFilled) {

@@ -61,13 +61,9 @@ public class Hexagon extends ClosedShape {
 	 * @param isFlashing True if the object flashes between primary and secondary colours
 	 */
 	public Hexagon(int insertionTime, int x, int y, int vx, int vy, int width, int height, Color colour, Color secondaryColour, boolean isFilled, boolean isFlashing) {
-		super (insertionTime, x, y, vx, vy, colour, isFilled);
+		super (insertionTime, x, y, vx, vy, colour, secondaryColour, isFilled, isFlashing);
 		this.width = width;
 		this.height = height;
-		this.isFlashing = isFlashing;
-		this.primaryColour = colour;
-		this.secondaryColour = secondaryColour;
-		this.lastTime = System.nanoTime() / 1000000000;
 	}
     
     /**
@@ -102,18 +98,6 @@ public class Hexagon extends ClosedShape {
     public void draw (GraphicsContext g) {
     	double[] xPoints = {x + 0.25 * width, x + 0.75 * width, x + width, x + 0.75 * width, x + 0.25 * width , x};
     	double[] yPoints = {y, y, y + 0.5 * height, y + height, y + height, y + 0.5 * height};
-
-    	if (isFlashing) {
-			currentTime = System.nanoTime() / 1000000000;
-			if ((currentTime - lastTime) >= 2) {
-				if (colour.equals(primaryColour)) {
-					colour = secondaryColour;
-				} else {
-					colour = primaryColour;
-				}
-				lastTime = currentTime;
-			}
-		}
 		g.setFill(colour);
 		g.setStroke(colour);
 

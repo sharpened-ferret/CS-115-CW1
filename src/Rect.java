@@ -16,12 +16,6 @@ import javafx.scene.paint.Color;
 public class Rect extends ClosedShape {
     //The width and height of the rectangle
 	private int width, height;
-	private boolean isFlashing = false;
-	private Color secondaryColour = null;
-	private Color primaryColour = null;
-	private double currentTime;
-	private double lastTime;
-
 
     /**
      * Creates a rectangle.
@@ -56,13 +50,9 @@ public class Rect extends ClosedShape {
 	 * @param isFlashing True if the object flashes between primary and secondary colours
 	 */
 	public Rect(int insertionTime, int x, int y, int vx, int vy, int width, int height,  Color colour, Color secondaryColour, boolean isFilled, boolean isFlashing) {
-		super (insertionTime, x, y, vx, vy, colour, isFilled);
+		super (insertionTime, x, y, vx, vy, colour, secondaryColour, isFilled, isFlashing);
 		this.width = width;
 		this.height = height;
-		this.isFlashing = isFlashing;
-		this.primaryColour = colour;
-		this.secondaryColour = secondaryColour;
-		this.lastTime = System.nanoTime() / 1000000000;
 	}
     
     /**
@@ -106,17 +96,6 @@ public class Rect extends ClosedShape {
      * @param g The graphics object of the scene component.
      */
     public void draw (GraphicsContext g) {
-		if (isFlashing) {
-			currentTime = System.nanoTime() / 1000000000;
-			if ((currentTime - lastTime) >= 2) {
-				if (colour.equals(primaryColour)) {
-					colour = secondaryColour;
-				} else {
-					colour = primaryColour;
-				}
-				lastTime = currentTime;
-			}
-		}
     	g.setFill( colour );
     	g.setStroke( colour );
     	if (isFilled) {

@@ -17,12 +17,6 @@ public class Square extends ClosedShape {
     //The side length of the square
 	private int sideLength;
 
-	//Variables for controlling flashing shapes
-	private boolean isFlashing = false;
-	private Color primaryColour = null;
-	private Color secondaryColour = null;
-	private double currentTime;
-	private double lastTime;
 
 
     /**
@@ -55,12 +49,8 @@ public class Square extends ClosedShape {
 	 * @param isFlashing True if the object flashes between primary and secondary colours
 	 */
 	public Square(int insertionTime, int x, int y, int vx, int vy, int sideLength, Color colour, Color secondaryColour, boolean isFilled, boolean isFlashing) {
-		super (insertionTime, x, y, vx, vy, colour, isFilled);
+		super (insertionTime, x, y, vx, vy, colour, secondaryColour, isFilled, isFlashing);
 		this.sideLength = sideLength;
-		this.isFlashing = isFlashing;
-		this.primaryColour = colour;
-		this.secondaryColour = secondaryColour;
-		this.lastTime = System.nanoTime() / 1000000000;
 	}
     
     /**
@@ -106,17 +96,6 @@ public class Square extends ClosedShape {
      * @param g The graphics object of the scene component.
      */
     public void draw (GraphicsContext g) {
-		if (isFlashing) {
-			currentTime = System.nanoTime() / 1000000000;
-			if ((currentTime - lastTime) >= 2) {
-				if (colour.equals(primaryColour)) {
-					colour = secondaryColour;
-				} else {
-					colour = primaryColour;
-				}
-				lastTime = currentTime;
-			}
-		}
     	g.setFill( colour );
     	g.setStroke( colour );
     	if (isFilled) {

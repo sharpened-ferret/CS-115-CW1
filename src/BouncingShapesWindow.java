@@ -35,6 +35,9 @@ public class BouncingShapesWindow {
 	private boolean flag=true;
 	
 	private String filename;
+
+	//Stores updating time stamp (in seconds) for colour updates
+	private double lastTime = System.currentTimeMillis() / 1000;
 	
 	
 	public BouncingShapesWindow(GraphicsContext gc,String filename) {
@@ -86,9 +89,17 @@ public class BouncingShapesWindow {
 	
 	private void onTime() {
 		currentTime++;
+		double currentTimeSecs = System.currentTimeMillis() / 1000;
 		double h =gc.getCanvas().getHeight();
 		double w = gc.getCanvas().getWidth();
 		gc.clearRect(0, 0, w, h);
+
+		//Updates colours of flashing shapes every 2 seconds
+		if ((currentTimeSecs - lastTime) >= 2) {
+			updateClosedShapeColours();
+			lastTime = currentTimeSecs;
+		}
+
 		moveShapes();
 		insertShapes ();
 		drawClosedShapes();
@@ -115,6 +126,13 @@ public class BouncingShapesWindow {
 				s.bounceY();
 			}
 			
+		}
+	}
+
+	public void updateClosedShapeColours() {
+		for (ClosedShape s : activeShapes)
+		{
+			s.updateColour();
 		}
 	}
 	 
