@@ -13,10 +13,6 @@ import java.util.Scanner;
 
 public class ReadShapeFile {
 
-	// TODO: You will likely need to write four methods here. One method to
-	// construct each shape
-	// given the Scanner passed as a parameter. I would suggest static
-	// methods in this case.
 
 	/**
 	 * Reads the data file used by the program and returns the constructed queue
@@ -36,31 +32,30 @@ public class ReadShapeFile {
 			switch (shape) {
 				case "circle":
 					Circle tempCircle = readCircle(currentLine);
-					System.out.println(tempCircle);
+					shapeQueue.enqueue(tempCircle);
 					break;
 
 				case "oval":
 					Oval tempOval = readOval(currentLine);
-					System.out.println(tempOval);
+					shapeQueue.enqueue(tempOval);
 					break;
 
 				case "square":
 					Square tempSquare = readSquare(currentLine);
-					System.out.println(tempSquare);
+					shapeQueue.enqueue(tempSquare);
 					break;
 
 				case "rect":
 					Rect tempRect =  readRect(currentLine);
-					System.out.println(tempRect);
+					shapeQueue.enqueue(tempRect);
 					break;
 
 				default:
 					break;
 			}
-//			System.out.println(shape + " "+ currentLine);
 		}
 
-		//Right now, returning an empty Queue.  You need to change this.
+		shapeQueue.print();
 		return shapeQueue;
 	}
 
