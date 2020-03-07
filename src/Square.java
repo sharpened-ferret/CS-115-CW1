@@ -17,10 +17,18 @@ public class Square extends ClosedShape {
     //The side length of the square
 	private int sideLength;
 
+	//Variables for controlling flashing shapes
+	private boolean isFlashing = false;
+	private Color primaryColour = null;
+	private Color secondaryColour = null;
+	private double currentTime;
+	private double lastTime;
+
 
     /**
      * Creates a square.
-     * @param x The display component's x position.
+     * @param insertionTime time delay before the object is rendered
+	 * @param x The display component's x position.
      * @param y The display component's y position.
      * @param vx The display component's x velocity.
      * @param vy The display component's y velocity.
@@ -31,8 +39,29 @@ public class Square extends ClosedShape {
     public Square(int insertionTime, int x, int y, int vx, int vy, int sideLength, Color colour, boolean isFilled) {
     	super (insertionTime, x, y, vx, vy, colour, isFilled);
     	this.sideLength = sideLength;
-    
     }
+
+	/**
+	 * Creates a square that can flash between two colours every two seconds.
+	 * @param insertionTime time delay before the object is rendered
+	 * @param x The display component's x position.
+	 * @param y The display component's y position.
+	 * @param vx The display component's x velocity.
+	 * @param vy The display component's y velocity.
+	 * @param sideLength The side length of the square.
+	 * @param colour The line colour or fill colour.
+	 * @param secondaryColour The alternate line colour or fill colour
+	 * @param isFilled True if the square is filled with colour, false if opaque.
+	 * @param isFlashing True if the object flashes between primary and secondary colours
+	 */
+	public Square(int insertionTime, int x, int y, int vx, int vy, int sideLength, Color colour, Color secondaryColour, boolean isFilled, boolean isFlashing) {
+		super (insertionTime, x, y, vx, vy, colour, isFilled);
+		this.sideLength = sideLength;
+		this.isFlashing = isFlashing;
+		this.primaryColour = colour;
+		this.secondaryColour = secondaryColour;
+		this.lastTime = System.nanoTime() / 1000000000;
+	}
     
     /**
      * Method to convert a square to a string.
@@ -77,6 +106,17 @@ public class Square extends ClosedShape {
      * @param g The graphics object of the scene component.
      */
     public void draw (GraphicsContext g) {
+		if (isFlashing) {
+			currentTime = System.nanoTime() / 1000000000;
+			if ((currentTime - lastTime) >= 2) {
+				if (colour.equals(primaryColour)) {
+					colour = secondaryColour;
+				} else {
+					colour = primaryColour;
+				}
+				lastTime = currentTime;
+			}
+		}
     	g.setFill( colour );
     	g.setStroke( colour );
     	if (isFilled) {

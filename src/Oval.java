@@ -21,8 +21,16 @@ public class Oval extends ClosedShape {
 	//The width and height of the oval (major and minor axis)
 	private int width, height;
 
+	//Variables for controlling flashing shapes
+	private boolean isFlashing = false;
+	private Color primaryColour = null;
+	private Color secondaryColour = null;
+	private double currentTime;
+	private double lastTime;
+
 	/**
 	 * Creates an oval.
+	 * @param insertionTime time delay until the object is rendered
 	 * @param x The display component's x position.
 	 * @param y The display component's y position.
 	 * @param vx The display component's x velocity.
@@ -32,10 +40,34 @@ public class Oval extends ClosedShape {
 	 * @param colour The line colour or fill colour.
 	 * @param isFilled True if the oval is filled with colour, false if opaque.
 	 */
-	public Oval (int insertionTime, int x, int y, int vx, int vy, int width, int height, Color colour, boolean isFilled) {
+	public Oval (int insertionTime, int x, int y, int vx, int vy, int width, int height, Color colour,  boolean isFilled) {
+		super(insertionTime, x, y, vx, vy, colour, isFilled);
+		this.width = width;
+		this.height = height;
+	}
+
+	/**
+	 * Creates an oval that can flash between two colours every two seconds.
+	 * @param insertionTime
+	 * @param x The display component's x position.
+	 * @param y The display component's y position.
+	 * @param vx The display component's x velocity.
+	 * @param vy The display component's y velocity.
+	 * @param width The width of the oval (in pixels).
+	 * @param height The height of the oval (in pixels).
+	 * @param colour The line colour or fill colour.
+	 * @param secondaryColour The alternate line colour or fill colour
+	 * @param isFilled True if the oval is filled with colour, false if opaque.
+	 * @param isFlashing True if the object flashes between primary and secondary colours
+	 */
+	public Oval (int insertionTime, int x, int y, int vx, int vy, int width, int height, Color colour, Color secondaryColour, boolean isFilled, boolean isFlashing) {
 		super (insertionTime, x, y, vx, vy, colour, isFilled);
 		this.width = width;
 		this.height = height;
+		this.isFlashing = isFlashing;
+		this.primaryColour = colour;
+		this.secondaryColour = secondaryColour;
+		this.lastTime = System.nanoTime() / 1000000000;
 	}
 
 	/**
@@ -81,6 +113,17 @@ public class Oval extends ClosedShape {
  	 * @param g The graphics object of the drawable component.
  	 */
 	public void draw (GraphicsContext g) {
+		if (isFlashing) {
+			currentTime = System.nanoTime() / 1000000000;
+			if ((currentTime - lastTime) >= 2) {
+				if (colour.equals(primaryColour)) {
+					colour = secondaryColour;
+				} else {
+					colour = primaryColour;
+				}
+				lastTime = currentTime;
+			}
+		}
 		g.setFill (colour);
 		g.setStroke( colour );
 		if (isFilled) {

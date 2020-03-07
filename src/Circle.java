@@ -21,11 +21,18 @@ import javafx.scene.canvas.GraphicsContext;
 public class Circle extends ClosedShape {
     //The diameter of the circle
 	private int diameter;
-	
+
+	//Variables for controlling flashing shapes
+	private boolean isFlashing = false;
+	private Color primaryColour = null;
+	private Color secondaryColour = null;
+	private double currentTime;
+	private double lastTime;
 
     /**
      * Creates a circle.
-     * @param x The display component's x position.
+     * @param insertionTime time delay before the object is rendered
+	 * @param x The display component's x position.
      * @param y The display component's y position.
      * @param vx The display component's x velocity.
      * @param vy The display component's y velocity.
@@ -36,8 +43,29 @@ public class Circle extends ClosedShape {
     public Circle (int insertionTime, int x, int y, int vx, int vy, int diameter, Color colour, boolean isFilled) {
     	super (insertionTime, x, y, vx, vy, colour, isFilled);
     	this.diameter = diameter;
-    
     }
+
+	/**
+	 * Creates a circle that can flash between two colours every two seconds.
+	 * @param insertionTime time delay before the object is rendered
+	 * @param x The display component's x position.
+	 * @param y The display component's y position.
+	 * @param vx The display component's x velocity.
+	 * @param vy The display component's y velocity.
+	 * @param diameter The diameter of the circle.
+	 * @param colour The line colour or fill colour.
+	 * @param secondaryColour The alternate line colour or fill colour
+	 * @param isFilled True if the circle is filled with colour, false if opaque.
+	 * @param isFlashing True if the object flashes between primary and secondary colours
+	 */
+	public Circle (int insertionTime, int x, int y, int vx, int vy, int diameter, Color colour, Color secondaryColour, boolean isFilled, boolean isFlashing) {
+		super (insertionTime, x, y, vx, vy, colour, isFilled);
+		this.diameter = diameter;
+		this.isFlashing = isFlashing;
+		this.primaryColour = colour;
+		this.secondaryColour = secondaryColour;
+		this.lastTime = System.nanoTime() / 1000000000;
+	}
     
     /**
      * Method to convert a circle to a string.
@@ -82,6 +110,17 @@ public class Circle extends ClosedShape {
      * @param g The graphics object of the scene component.
      */
     public void draw (GraphicsContext g) {
+		if (isFlashing) {
+			currentTime = System.nanoTime() / 1000000000;
+			if ((currentTime - lastTime) >= 2) {
+				if (colour.equals(primaryColour)) {
+					colour = secondaryColour;
+				} else {
+					colour = primaryColour;
+				}
+				lastTime = currentTime;
+			}
+		}
     	g.setFill( colour );
     	g.setStroke( colour );
     	if (isFilled) {

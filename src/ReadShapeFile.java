@@ -78,16 +78,26 @@ public class ReadShapeFile {
 		boolean isFilled = Boolean.parseBoolean(circleData[5]);
 		int diameter = Integer.parseInt(circleData[6]);
 		int insertionTime = Integer.parseInt(circleData[10]);
+		boolean isFlashing = Boolean.parseBoolean(circleData[11]);
 
 		//Creates an RGB colour from the r, g, and b values given
 		Color colour = Color.rgb(Integer.parseInt(circleData[7]),
 				Integer.parseInt(circleData[8]),
 				Integer.parseInt(circleData[9]));
 
-		Circle newCircle = new Circle(insertionTime, xPosition, yPosition,
-				xVelocity, yVelocity, diameter, colour, isFilled);
-
-		return newCircle;
+		if (isFlashing) {
+			Color secondaryColour = Color.rgb(Integer.parseInt(circleData[12]),
+					Integer.parseInt(circleData[13]),
+					Integer.parseInt(circleData[14]));
+			Circle newCircle = new Circle(insertionTime, xPosition, yPosition,
+					xVelocity, yVelocity, diameter, colour, secondaryColour, isFilled, isFlashing);
+			return newCircle;
+		}
+		else {
+			Circle newCircle = new Circle(insertionTime, xPosition, yPosition,
+					xVelocity, yVelocity, diameter, colour, isFilled);
+			return newCircle;
+		}
 	}
 
 	/**
@@ -104,16 +114,26 @@ public class ReadShapeFile {
 		int width = Integer.parseInt(ovalData[6]);
 		int height = Integer.parseInt(ovalData[7]);
 		int insertionTime = Integer.parseInt(ovalData[11]);
+		boolean isFlashing = Boolean.parseBoolean(ovalData[12]);
 
 		//Creates an RGB colour from the r, g, and b values given
 		Color colour = Color.rgb(Integer.parseInt(ovalData[8]),
 				Integer.parseInt(ovalData[9]),
 				Integer.parseInt(ovalData[10]));
 
-		Oval newOval = new Oval(insertionTime, xPosition, yPosition,
-				xVelocity, yVelocity, width, height, colour, isFilled);
-
-		return newOval;
+		if (isFlashing) {
+			Color secondaryColour = Color.rgb(Integer.parseInt(ovalData[13]),
+					Integer.parseInt(ovalData[14]),
+					Integer.parseInt(ovalData[15]));
+			Oval newOval = new Oval(insertionTime, xPosition, yPosition,
+					xVelocity, yVelocity, width, height, colour, secondaryColour, isFilled, isFlashing);
+			return newOval;
+		}
+		else {
+			Oval newOval = new Oval(insertionTime, xPosition, yPosition,
+					xVelocity, yVelocity, width, height, colour, isFilled);
+			return newOval;
+		}
 	}
 
 	/**
@@ -129,16 +149,26 @@ public class ReadShapeFile {
 		boolean isFilled = Boolean.parseBoolean(squareData[5]);
 		int sideLength = Integer.parseInt(squareData[6]);
 		int insertionTime = Integer.parseInt(squareData[10]);
+		boolean isFlashing = Boolean.parseBoolean(squareData[11]);
 
 		//Creates an RGB colour from the r, g, and b values given
 		Color colour = Color.rgb(Integer.parseInt(squareData[7]),
 				Integer.parseInt(squareData[8]),
 				Integer.parseInt(squareData[9]));
 
-		Square newSquare = new Square(insertionTime, xPosition, yPosition,
-				xVelocity, yVelocity, sideLength, colour, isFilled);
-
-		return newSquare;
+		if (isFlashing) {
+			Color secondaryColour = Color.rgb(Integer.parseInt(squareData[12]),
+					Integer.parseInt(squareData[13]),
+					Integer.parseInt(squareData[14]));
+			Square newSquare = new Square(insertionTime, xPosition, yPosition,
+					xVelocity, yVelocity, sideLength, colour, secondaryColour, isFilled, isFlashing);
+			return newSquare;
+		}
+		else {
+			Square newSquare = new Square(insertionTime, xPosition, yPosition,
+					xVelocity, yVelocity, sideLength, colour, isFilled);
+			return newSquare;
+		}
 	}
 
 	/**
@@ -155,16 +185,26 @@ public class ReadShapeFile {
 		int width = Integer.parseInt(rectData[6]);
 		int height = Integer.parseInt(rectData[7]);
 		int insertionTime = Integer.parseInt(rectData[11]);
+		boolean isFlashing = Boolean.parseBoolean(rectData[12]);
 
 		//Creates an RGB colour from the r, g, and b values given
 		Color colour = Color.rgb(Integer.parseInt(rectData[8]),
 				Integer.parseInt(rectData[9]),
 				Integer.parseInt(rectData[10]));
 
-		Rect newRect = new Rect(insertionTime, xPosition, yPosition,
-				xVelocity, yVelocity, width, height, colour, isFilled);
-
-		return newRect;
+		if (isFlashing) {
+			Color secondaryColour = Color.rgb(Integer.parseInt(rectData[13]),
+					Integer.parseInt(rectData[14]),
+					Integer.parseInt(rectData[15]));
+			Rect newRect = new Rect(insertionTime, xPosition, yPosition,
+					xVelocity, yVelocity, width, height, colour, secondaryColour, isFilled, isFlashing);
+			return  newRect;
+		}
+		else {
+			Rect newRect = new Rect(insertionTime, xPosition, yPosition,
+					xVelocity, yVelocity, width, height, colour, isFilled);
+			return newRect;
+		}
 	}
 
 	/**
@@ -181,16 +221,26 @@ public class ReadShapeFile {
 		int width = Integer.parseInt(hexData[6]);
 		int height = Integer.parseInt(hexData[7]);
 		int insertionTime = Integer.parseInt(hexData[11]);
+		boolean isFlashing = Boolean.parseBoolean(hexData[12]);
 
 		//Creates an RGB colour from the r, g, and b values given
 		Color colour = Color.rgb(Integer.parseInt(hexData[8]),
 				Integer.parseInt(hexData[9]),
 				Integer.parseInt(hexData[10]));
 
-		Hexagon newHex = new Hexagon(insertionTime, xPosition, yPosition,
-				xVelocity, yVelocity, width, height, colour, isFilled);
-
-		return newHex;
+		if (isFlashing) {
+			Color secondaryColour = Color.rgb(Integer.parseInt(hexData[13]),
+					Integer.parseInt(hexData[14]),
+					Integer.parseInt(hexData[15]));
+			Hexagon newHex = new Hexagon(insertionTime, xPosition, yPosition,
+					xVelocity, yVelocity, width, height, colour, secondaryColour, isFilled, isFlashing);
+			return newHex;
+		}
+		else {
+			Hexagon newHex = new Hexagon(insertionTime, xPosition, yPosition,
+					xVelocity, yVelocity, width, height, colour, isFilled);
+			return newHex;
+		}
 	}
 
 	/**
