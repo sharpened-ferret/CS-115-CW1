@@ -41,13 +41,24 @@ public abstract class ClosedShape {
 	protected int yVec;
 
 	/**
-	 * The line colour of the shape, or the filled in
+	 * The (current) line colour of the shape, or the filled in
 	 * colour if the Shape has fill.
 	 */
 	protected Color colour;
 
+	/**
+	 * Stores the shape's first colour (for flashing shapes)
+	 */
 	protected Color initialColor;
+
+	/**
+	 * Stores the shape's second colour (for flashing shapes)
+	 */
 	protected Color secondaryColor;
+
+	/**
+	 * Determines if the shape uses flashing behaviour
+	 */
 	protected boolean isFlashing;
 
 	/**
@@ -149,6 +160,20 @@ public abstract class ClosedShape {
 	 	this.colour = colour;
 	 }
 
+	/**
+	 * @param initialColor Resets the initial colour (for flashing shapes)
+	 */
+	public void setInitialColor(Color initialColor) {
+		this.initialColor = initialColor;
+	}
+
+	/**
+	 * @param colour Resets the second colour (for flashing shapes)
+	 */
+	public void setSecondaryColor (Color colour) {
+	 	this.secondaryColor = colour;
+	 }
+
 	 /**
 	  * Sets the shape to filled.
 	  */
@@ -191,7 +216,21 @@ public abstract class ClosedShape {
 	 	return colour;
 	 }
 
-	 /**
+	/**
+	 * @return the initial colour (for flashing shapes)
+	 */
+	public Color getInitialColor() {
+		return initialColor;
+	}
+
+	/**
+	 * @return the second colour (for flashing shapes)
+	 */
+	public Color getSecondaryColor() {
+		return secondaryColor;
+	}
+
+	/**
 	  * @return True if the shape is filled, false if not.
 	  */
 	 public boolean isFilled() {
@@ -262,13 +301,16 @@ public abstract class ClosedShape {
 	 	y += yVec;
 	 }
 
+	/**
+	 * Switches the active colour between the initial colour and the secondary colour (for flashing shapes)
+	 */
 	 public void updateColour() {
 	 	if (isFlashing) {
 	 		if (colour.equals(initialColor)) {
-	 			colour = secondaryColor;
+	 			this.setColour(secondaryColor);
 			}
 	 		else {
-	 			colour = initialColor;
+	 			this.setColour(initialColor);
 			}
 		}
 	 }

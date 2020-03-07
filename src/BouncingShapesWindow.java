@@ -129,6 +129,9 @@ public class BouncingShapesWindow {
 		}
 	}
 
+	/**
+	 * Calls colour update methods for all active ClosedShape objects, to switch colours for flashing shapes
+	 */
 	public void updateClosedShapeColours() {
 		for (ClosedShape s : activeShapes)
 		{
