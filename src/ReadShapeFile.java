@@ -50,6 +50,11 @@ public class ReadShapeFile {
 					shapeQueue.enqueue(tempRect);
 					break;
 
+				case "hex":
+					Hexagon tempHex =  readHex(currentLine);
+					shapeQueue.enqueue(tempHex);
+					break;
+
 				default:
 					break;
 			}
@@ -160,6 +165,32 @@ public class ReadShapeFile {
 				xVelocity, yVelocity, width, height, colour, isFilled);
 
 		return newRect;
+	}
+
+	/**
+	 * @param hexData a String array containing properties read from file, split at space characters
+	 * @return a new Hexagon object with the specified properties
+	 */
+	private static Hexagon readHex(String[] hexData) {
+		//Assigns the relevant portions of the ovalData array to correctly typed variables.
+		int xPosition = Integer.parseInt(hexData[1]);
+		int yPosition = Integer.parseInt(hexData[2]);
+		int xVelocity = Integer.parseInt(hexData[3]);
+		int yVelocity = Integer.parseInt(hexData[4]);
+		boolean isFilled = Boolean.parseBoolean(hexData[5]);
+		int width = Integer.parseInt(hexData[6]);
+		int height = Integer.parseInt(hexData[7]);
+		int insertionTime = Integer.parseInt(hexData[11]);
+
+		//Creates an RGB colour from the r, g, and b values given
+		Color colour = Color.rgb(Integer.parseInt(hexData[8]),
+				Integer.parseInt(hexData[9]),
+				Integer.parseInt(hexData[10]));
+
+		Hexagon newHex = new Hexagon(insertionTime, xPosition, yPosition,
+				xVelocity, yVelocity, width, height, colour, isFilled);
+
+		return newHex;
 	}
 
 	/**
